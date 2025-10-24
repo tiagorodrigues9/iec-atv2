@@ -1,33 +1,58 @@
-# Nome do workflow que aparece no GitHub
+# Nome do workflow que aparece no github
 name: CI/CD Pipeline
 
-# Quando executar: a cada push ou pull request
+# Executa a cada Push ou Pull request na main
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
-# Lista de trabalhos (jobs) a executar
-jobs:
-  # Job 1: CI - Testes e validação
+# Lista de Jobs
+jobs: 
+  # Job 1: CI
   ci:
-    # Sistema operacional para executar
     runs-on: ubuntu-latest
 
-    # Lista de passos (steps) do job
+    # Lista de passos do job
     steps:
-    # Passo 1: Baixar o código do repositório
-    - name: Fazer checkout do código
-      uses: actions/checkout@v4
+        # Passo 1: Baixar o código do repositório
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-    # Passo 2: Configurar Java 21
-    - name: Configurar Java 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
+        # Passo 2: Configurar Java 21
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
 
-    # Passo 3: Executar testes
-    - name: Executar testes
-      run: mvn -B test --file pom.xml
+        # Passo 3: Executar testes
+      - name: Executar testes
+        run: mvn -B test --file pom.xml
+      
+  cd:
+    needs: ci    
+
+    if: github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+      
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      
+      - name: Gerar JAR para deploy
+        run: mvn -B package --file pom.xml -DskipTests
+
+      - name: Upload JAR para deploy
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: targer/*jar

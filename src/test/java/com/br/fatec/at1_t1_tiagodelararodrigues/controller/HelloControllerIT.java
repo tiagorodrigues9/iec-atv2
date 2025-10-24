@@ -17,7 +17,7 @@ class HelloControllerIT {
     @Test
     void deveRetornarMensagemHelloQuandoGetHelloEndpoint() throws Exception {
         // Simulamos uma chamada GET para /api/hello
-        mockMvc.perform(get("/atv1/hello"))
+        mockMvc.perform(get("/atv/hello"))
                // Verificamos se o status da resposta é 200 OK
                .andExpect(status().isOk())
                .andExpect(content().string("Tiago de Lara Rodrigues"));
