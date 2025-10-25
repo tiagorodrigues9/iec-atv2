@@ -28,8 +28,8 @@ class LinksControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].titulo").value("Desenvolvimento de sistemas"))
-                .andExpect(jsonPath("$[1].titulo").value("Gestão Empresarial"));
+                .andExpect(jsonPath("$[0].curso").value("Desenvolvimento de sistemas"))
+                .andExpect(jsonPath("$[1].curso").value("Gestão Empresarial"));
     }
 
     @Test
@@ -37,7 +37,7 @@ class LinksControllerIT {
         mockMvc.perform(get("/atv/links/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("1"))
-                .andExpect(jsonPath("$.titulo").value("Desenvolvimento de sistemas"));
+                .andExpect(jsonPath("$.curso").value("Desenvolvimento de sistemas"));
     }
 
     @Test
@@ -51,7 +51,7 @@ class LinksControllerIT {
     void deveCriarNovoLinkQuandoPostLinksEndpoint() throws Exception {
         String novoLink = """
                 {
-                    "titulo": "Nutrição"
+                    "curso": "Nutrição"
                 }
                 """;
 
@@ -60,14 +60,14 @@ class LinksControllerIT {
                         .content(novoLink))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("3"))
-                .andExpect(jsonPath("$.titulo").value("Nutrição"));
+                .andExpect(jsonPath("$.curso").value("Nutrição"));
     }
 
     @Test
     void deveAtualizarLinkCompletamenteQuandoPutLinksEndpoint() throws Exception {
         String linkAtualizado = """
                 {
-                    "titulo": "Desenvolvimento de sistemas novo"
+                    "curso": "Desenvolvimento de sistemas novo"
                 }
                 """;
 
@@ -76,14 +76,14 @@ class LinksControllerIT {
                         .content(linkAtualizado))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("1"))
-                .andExpect(jsonPath("$.titulo").value("Desenvolvimento de sistemas novo"));
+                .andExpect(jsonPath("$.curso").value("Desenvolvimento de sistemas novo"));
     }
 
     @Test
     void deveAtualizarLinkParcialmenteQuandoPatchLinksEndpoint() throws Exception {
         String atualizacaoParcial = """
                 {
-                    "titulo": "Só o Título Novo"
+                    "curso": "Só o Curso Novo"
                 }
                 """;
 
@@ -92,14 +92,14 @@ class LinksControllerIT {
                         .content(atualizacaoParcial))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value("2"))
-                .andExpect(jsonPath("$.titulo").value("Só o Título Novo"));
+                .andExpect(jsonPath("$.curso").value("Só o Curso Novo"));
     }
 
     @Test
     void deveRetornarVazioQuandoPatchLinksEndpointComIdInexistente() throws Exception {
         String atualizacaoParcial = """
                 {
-                    "titulo": "Teste"
+                    "curso": "Teste"
                 }
                 """;
 

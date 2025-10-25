@@ -23,7 +23,7 @@ class LinksControllerTest {
     void deveRetornarTodosOsLinks() {
         List<Map<String, String>> links = controller.getLinks();
         assertEquals(2, links.size());
-        assertEquals("Desenvolvimento de sistemas", links.get(0).get("titulo"));
+        assertEquals("Desenvolvimento de sistemas", links.get(0).get("curso"));
     }
 
     // 2. Teste para buscar link por ID existente
@@ -31,7 +31,7 @@ class LinksControllerTest {
     void deveRetornarLinkQuandoIdExiste() {
         Map<String, String> link = controller.getLinkById(1);
         assertEquals("1", link.get("id"));
-        assertEquals("Desenvolvimento de sistemas", link.get("titulo"));
+        assertEquals("Desenvolvimento de sistemas", link.get("curso"));
     }
 
     // 3. Teste para buscar link por ID inexistente
@@ -44,36 +44,35 @@ class LinksControllerTest {
     // 4. Teste para criar novo link
     @Test
     void deveCriarNovoLinkComIdGerado() {
-        Map<String, String> novoLink = Map.of("titulo", "Nutrição");
+        Map<String, String> novoLink = Map.of("curso", "Nutrição");
         Map<String, String> resultado = controller.createLink(novoLink);
 
-        assertEquals("Nutrição", resultado.get("titulo"));
+        assertEquals("Nutrição", resultado.get("curso"));
         assertEquals("3", resultado.get("id")); // Próximo ID
     }
 
     // 5. Teste para atualizar link existente
     @Test
     void deveAtualizarLinkExistenteCompletamente() {
-        Map<String, String> dadosAtualizacao = Map.of("titulo", "Novo Título");
+        Map<String, String> dadosAtualizacao = Map.of("curso", "Novo Curso");
         Map<String, String> resultado = controller.updateLink(1, dadosAtualizacao);
 
-        assertEquals("Novo Título", resultado.get("titulo"));
+        assertEquals("Novo Curso", resultado.get("curso"));
     }
 
     // 6. Teste para atualizar parcialmente (PATCH)
     @Test
     void deveAtualizarLinkParcialmente() {
-        Map<String, String> dadosParciais = Map.of("titulo", "Título Atualizado");
+        Map<String, String> dadosParciais = Map.of("curso", "Curso Atualizado");
         Map<String, String> resultado = controller.patchLink(2, dadosParciais);
 
-        assertEquals("Título Atualizado", resultado.get("titulo"));
-        
+        assertEquals("Curso Atualizado", resultado.get("curso"));
     }
 
     // 7. Teste para PATCH com link inexistente
     @Test
     void deveRetornarNullQuandoPatchLinkInexistente() {
-        Map<String, String> dadosParciais = Map.of("titulo", "Teste");
+        Map<String, String> dadosParciais = Map.of("curso", "Teste");
         Map<String, String> resultado = controller.patchLink(999, dadosParciais);
 
         assertEquals(null, resultado);
