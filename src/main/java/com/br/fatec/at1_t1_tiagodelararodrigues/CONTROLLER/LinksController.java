@@ -25,8 +25,8 @@ public class LinksController {
 
     public LinksController() {
         // Dados iniciais
-        linksDB.put(1, Map.of("id", "1", "curso", "Desenvolvimento de sistemas"));
-        linksDB.put(2, Map.of("id", "2", "curso", "Gestão Empresarial"));
+        linksDB.put(1, Map.of("id", "1", "curso", "Banco de Dados Não Relacional"));
+        linksDB.put(2, Map.of("id", "2", "curso", "Laboratório de desenvolvimento web"));
         nextId = 3;
     }
 
