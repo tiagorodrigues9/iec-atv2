@@ -6,14 +6,6 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-/**
- * Testes unitários simples para o LinksController.
- *
- * Esta classe testa os métodos do controller diretamente,
- * sem usar o contexto do Spring ou simulação HTTP.
- *
- * Ideal para testar a lógica de negócio isoladamente.
- */
 class LinksControllerTest {
 
     private final LinksController controller = new LinksController();
@@ -23,7 +15,7 @@ class LinksControllerTest {
     void deveRetornarTodosOsLinks() {
         List<Map<String, String>> links = controller.getLinks();
         assertEquals(2, links.size());
-        assertEquals("Desenvolvimento de sistemas", links.get(0).get("curso"));
+        assertEquals("Programação de dispositivos móveis", links.get(0).get("curso"));
     }
 
     // 2. Teste para buscar link por ID existente
@@ -31,7 +23,7 @@ class LinksControllerTest {
     void deveRetornarLinkQuandoIdExiste() {
         Map<String, String> link = controller.getLinkById(1);
         assertEquals("1", link.get("id"));
-        assertEquals("Desenvolvimento de sistemas", link.get("curso"));
+        assertEquals("Programação de dispositivos móveis", link.get("curso"));
     }
 
     // 3. Teste para buscar link por ID inexistente
